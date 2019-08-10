@@ -1,0 +1,39 @@
+{% extends 'cheer_app/base.html' %}
+
+{% block content %}
+  <div class="post">
+    {% if post.published_date %}
+      <div class="date">
+        {{ post.published_date }}
+      </div>
+    {% else %}
+      <a href="{% url 'post_publish' pk=post.pk %}">公開</a>
+    {% endif %}
+    {% if post.author.username == user.username %}
+      <a href="{% url 'post_edit' pk=post.pk %}">編集</a>
+      <a href="{% url 'post_remove' pk=post.pk %}">削除</a>
+    {% endif %}
+    <h1>{{ post.title }}</h1>
+      <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+
+    <hr>
+    <a href="{% url 'add_comment_to_post' pk=post.pk %}">コメント追加</a>
+    {% for comment in post.comments.all %}
+    {% if post.author.username == user.username or comment.approved_comment %}
+      <div class="comment">
+        <div class="date">
+          {{ comment.created_date }}
+          {% if not comment.approved_comment and post.author.username == user.username %}
+            <a href="{% url 'comment_remove' pk=comment.pk %}">削除</a>
+            <a href="{% url 'comment_approve' pk=comment.pk %}">承認</a>
+          {% endif %}
+        </div>
+        <strong>{{ comment.author }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+      </div>
+    {% endif %}
+    {% empty %}
+      <p>コメントはまだありません</p>
+      {% endfor %}
+{% endblock %}

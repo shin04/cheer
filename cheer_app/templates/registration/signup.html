@@ -1,0 +1,9 @@
+{% extends 'cheer_app/base.html' %}
+{% block content %}
+  <h1>Please Sign Up to Polls App.</h1>
+  <form action="{% url 'signup' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Sign Up">
+  </form>
+{% endblock %}

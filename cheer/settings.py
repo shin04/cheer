@@ -28,8 +28,7 @@ except ImportError:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['127.0.0.1', '3bfa4785.ngrok.io']
 
 # Application definition
 
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'cheer_app',
     'accounts',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [

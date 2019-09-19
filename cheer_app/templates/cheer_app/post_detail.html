@@ -3,9 +3,7 @@
 {% block content %}
   <div class="post">
     {% if post.published_date %}
-      <div class="date">
-        {{ post.published_date }}
-      </div>
+      
     {% else %}
       <a href="{% url 'post_publish' pk=post.pk %}">公開</a>
     {% endif %}

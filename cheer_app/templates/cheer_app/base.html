@@ -1,7 +1,7 @@
 {% load static %}
 <html>
   <head>
-    <title>Django Girls blog</title>
+    <title>cheer</title>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
   </head>
   <body>
@@ -10,7 +10,7 @@
       {% if user.is_authenticated %}
         <a href="{% url 'post_new' %}">新規投稿</a>
         <a href="{% url 'post_draft_list' %}">草稿一覧</a>
-        <a href="{% url 'my_post_list' %}">自分の投稿</a>
+        <a href="{% url 'my_post_list' %}">マイページ</a>
         <p >Hello {{ user.username }}</p>
         <a href="{% url 'logout' %}">ログアウト</a>
       {% else %}

@@ -1,13 +1,25 @@
 {% extends 'cheer_app/base.html' %}
 
 {% block content %}
-<h1>投稿一覧</h1>
-  {% for post in posts %}
-    {% if post.author.username == user.username %}
-      <div class="post">
-        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-        <p>{{ post.text|truncatechars:200 }}</p>
-      </div>
-    {% endif %}
-  {% endfor %}
+  <h1>マイページ</h1>
+
+  <div class="post">
+    <h2>投稿一覧</h2>
+    {% for post in posts %}
+      {% if post.author.username == user.username %}
+          <p><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></p>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="comment">
+    <h2>最近の応援</h2>
+    {% for post in posts %}
+      {% if post.author.username == user.username %}
+        {% for comment in post.comments.all %}
+          <p>{{ comment }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  </div>
 {% endblock %}

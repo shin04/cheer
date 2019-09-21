@@ -55,6 +55,11 @@ def post_edit(request, pk):
     return render(request, 'cheer_app/post_edit.html', {'form': form})
 
 @login_required
+def my_post_list(request):
+    posts = Post.objects.all().order_by('created_date')
+    return render(request, 'cheer_app/my_post_list.html', {'posts': posts})
+
+@login_required
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
     return render(request, 'cheer_app/post_draft_list.html', {'posts': posts})
@@ -83,12 +88,6 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'cheer_app/add_comment_to_post.html', {'form': form})
-
-@login_required
-def comment_approve(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    comment.approve()
-    return redirect('post_detail', pk=comment.post.pk)
 
 @login_required
 def comment_remove(request, pk):

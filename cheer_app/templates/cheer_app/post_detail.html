@@ -3,7 +3,7 @@
 {% block content %}
   <div class="post">
     {% if post.published_date %}
-      
+
     {% else %}
       <a href="{% url 'post_publish' pk=post.pk %}">公開</a>
     {% endif %}
@@ -16,22 +16,25 @@
     </div>
 
     <hr>
-    <a href="{% url 'add_comment_to_post' pk=post.pk %}">コメント追加</a>
-    {% for comment in post.comments.all %}
-    {% if post.author.username == user.username or comment.approved_comment %}
-      <div class="comment">
-        <div class="date">
-          {{ comment.created_date }}
-          {% if not comment.approved_comment and post.author.username == user.username %}
-            <a href="{% url 'comment_remove' pk=comment.pk %}">削除</a>
-            <a href="{% url 'comment_approve' pk=comment.pk %}">承認</a>
+    <a href="{% url 'add_comment_to_post' pk=post.pk %}">応援する</a>
+
+    <div class="cheer_count">
+      <p>応援された数：{{ post.comments.count }}</p>
+    </div>
+
+    <hr>
+    <p>応援コメント一覧</p>
+    {% if post.author.username == user.username %}
+      {% for comment in post.comments.all %}
+        <div class="comment">
+          <!--<a href="{% url 'comment_remove' pk=comment.pk %}">削除</a>-->
+          {% if comment.text %}
+            <strong>{{ comment.author }}</strong>
+            <p>{{ comment.text|linebreaks }}</p>
           {% endif %}
         </div>
-        <strong>{{ comment.author }}</strong>
-        <p>{{ comment.text|linebreaks }}</p>
-      </div>
-    {% endif %}
-    {% empty %}
-      <p>コメントはまだありません</p>
+      {% empty %}
+        <p>まだ応援されてません</p>
       {% endfor %}
+    {% endif %}
 {% endblock %}

@@ -19,13 +19,11 @@ from django.urls import path, include
 from django.contrib.auth import views
 from cheer_app.urls import router as cheer_router
 
-from rest_framework_jwt.views import obtain_jwt_token
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('cheer_app.urls')),
     path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/logout/', views.LogoutView.as_view(), name='logout'),
     path('api/', include(cheer_router.urls)), # rest_framework
-    path('obtain_jwt_token/', obtain_jwt_token),
+    path('api-auth/', include('rest_framework.urls')), #rest_framework
 ]

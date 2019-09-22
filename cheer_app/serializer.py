@@ -3,10 +3,10 @@ from .models import Post, Comment
 from accounts.models import CustomUser as User
 from .forms import SignUpForm
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('url', 'username', 'email', 'is_staff')
 
         def create(self, validated_data):
           """

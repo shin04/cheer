@@ -99,7 +99,6 @@ def comment_remove(request, pk):
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
 
-
 # rest-framewark
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

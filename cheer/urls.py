@@ -27,5 +27,5 @@ urlpatterns = [
     path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/logout/', views.LogoutView.as_view(), name='logout'),
     path('api/', include(cheer_router.urls)), # rest_framework
-    path('obtain_jwt_token/', obtain_jwt_token)
+    path('obtain_jwt_token/', obtain_jwt_token),
 ]

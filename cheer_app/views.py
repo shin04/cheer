@@ -18,6 +18,8 @@ def signup(request):
 
     return render(request, 'registration/signup.html', {'form':form})
 
+def index(request):
+    return render(request, 'cheer_app/index.html')
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -56,8 +58,10 @@ def post_edit(request, pk):
 
 @login_required
 def my_post_list(request):
-    posts = Post.objects.all().order_by('created_date')
-    return render(request, 'cheer_app/my_post_list.html', {'posts': posts})
+    posts = Post.objects.filter()
+    drafts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
+    #posts = Post.objects.all().order_by('created_date')
+    return render(request, 'cheer_app/my_post_list.html', {'posts': posts, 'drafts': drafts})
 
 @login_required
 def post_draft_list(request):

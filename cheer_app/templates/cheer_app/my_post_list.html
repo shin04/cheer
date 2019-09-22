@@ -24,4 +24,13 @@
       {% endif %}
     {% endfor %}
   </div>
+
+  <div class="draft">
+    <h2>草稿一覧</h2>
+    {% for draft in drafts %}
+      {% if draft.author.username == user.username %}
+        <p><a href="{% url 'post_detail' pk=draft.pk %}">{{ draft.title }}</a></p>
+      {% endif %}
+    {% endfor %}
+  </div>
 {% endblock %}

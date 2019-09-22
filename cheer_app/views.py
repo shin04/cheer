@@ -5,7 +5,7 @@ from .models import Post, Comment
 from accounts.models import CustomUser as User
 from .forms import PostForm, CommentForm, SignUpForm
 from .serializer import PostSerializer, CommentSerializer, UserSerializer
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, permissions
 
 def signup(request):
     if request.method == 'POST':

@@ -14,6 +14,12 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('author', 'title', 'text', 'created_date', 'published_date', 'pk')
 
+    def create(self, validated_data):
+        user_data = validated_data.pop('author')
+        user = User.objects.get(username=user_data['username'])
+        post = Post.objects.create(author=user, **validated_data)
+        return post
+
 class CommentSerializer(serializers.ModelSerializer):
     post = PostSerializer()
     class Meta:

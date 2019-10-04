@@ -6,6 +6,9 @@ from accounts.models import CustomUser as User
 from .forms import PostForm, CommentForm, SignUpForm
 from .serializer import PostSerializer, CommentSerializer, UserSerializer
 from rest_framework import viewsets, filters
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.authtoken.models import Token
 
 def signup(request):
     if request.method == 'POST':
@@ -101,6 +104,10 @@ def comment_remove(request, pk):
 
 
 # rest-framewark
+@api_view(['GET'])
+def is_user(request):
+    return Response({"username": request.user.username, "token": Token.objects.get_or_create(user=request.user)[0].key})
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -108,6 +115,13 @@ class UserViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+class MyPostViewSet(viewsets.ModelViewSet):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Post.objects.filter(author=user)
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()

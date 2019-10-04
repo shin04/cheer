@@ -1,12 +1,13 @@
 from django.urls import path
 from . import views
-from .views import UserViewSet, PostViewSet, CommentViewSet
+from .views import UserViewSet, PostViewSet, CommentViewSet, MyPostViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'posts', PostViewSet)
 router.register(r'comment', CommentViewSet)
+router.register(r'myposts', MyPostViewSet, base_name='MyPost')
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -21,4 +22,5 @@ urlpatterns = [
     path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
     path('signup/', views.signup, name='signup'),
+    path('api/who', views.is_user, name='who'),
 ]

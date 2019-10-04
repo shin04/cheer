@@ -8,14 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'email')
 
-        def create(self, validated_data):
-          """
-          passwordをハッシュ化してから登録(djangoデフォルトのライブラリを使用)
-          """
-          password = validated_data.get('password')
-          validated_data['password'] = make_password(password)
-          return User.objects.create(**validated_data)
-
 class PostSerializer(serializers.ModelSerializer):
     author = UserSerializer()
     class Meta:

@@ -7,6 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email')
+        extra_kwargs = { 'username': { 'read_only': False } }
 
 class PostSerializer(serializers.ModelSerializer):
     author = UserSerializer()
@@ -16,7 +17,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_data = validated_data.pop('author')
-        user = User.objects.get(username=user_data['username'])
+        user = User.objects.get(author=user_data)
         post = Post.objects.create(author=user, **validated_data)
         return post
 

@@ -106,7 +106,7 @@ def comment_remove(request, pk):
 # rest-framewark
 @api_view(['GET'])
 def is_user(request):
-    return Response({"username": request.user.username, "email": request.user.email, "token": Token.objects.get_or_create(user=request.user)[0].key})
+    return Response({"id": request.user.id, "username": request.user.username, "email": request.user.email, "token": Token.objects.get_or_create(user=request.user)[0].key})
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

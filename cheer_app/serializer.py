@@ -7,7 +7,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email')
-        #extra_kwargs = { 'username': { 'read_only': False } }
 
 class PostSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)

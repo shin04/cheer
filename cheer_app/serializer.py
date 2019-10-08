@@ -26,6 +26,7 @@ class PostSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_date):
         instance.title = validated_date.get('title', instance.title)
         instance.text = validated_date.get('text', instance.text)
+        instance.save()
 
         return instance
 

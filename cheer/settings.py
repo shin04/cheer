@@ -28,7 +28,7 @@ except ImportError:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '3419f63e.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', 'f988b296.ngrok.io']
 
 # Application definition
 

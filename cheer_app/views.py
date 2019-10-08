@@ -7,8 +7,10 @@ from .forms import PostForm, CommentForm, SignUpForm
 from .serializer import PostSerializer, CommentSerializer, UserSerializer
 from rest_framework import viewsets, filters
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.authtoken.models import Token
+
+from django.utils import timezone
 
 def signup(request):
     if request.method == 'POST':
@@ -102,7 +104,6 @@ def comment_remove(request, pk):
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
 
-
 # rest-framewark
 @api_view(['GET'])
 def is_user(request):
@@ -115,6 +116,15 @@ class UserViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    # @action(detail=True, methods=['post'])
+    # def publish(self, request, pk=None):
+    #     # post = Post.objects.filter(pk=pk)
+    #     # post.published_date = timezone.now()
+    #     # post.save()
+    #     post = get_object_or_404(Post, pk=pk)
+    #     post.publish()
+    #     return Response({'ststus': 'success'})
 
 class MyPostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer

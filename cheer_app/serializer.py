@@ -32,7 +32,16 @@ class PostSerializer(serializers.ModelSerializer):
         return instance
 
 class CommentSerializer(serializers.ModelSerializer):
-    post = PostSerializer()
+    post = PostSerializer(read_only=True)
+    post_id = serializers.PrimaryKeyRelatedField(queryset=Post.objects.all(), write_only=True)
     class Meta:
         model = Comment
-        fields = ('id', 'post', 'author', 'text', 'created_date')
+        fields = ('id', 'post', 'post_id', 'author', 'text', 'created_date')
+
+    def create(self, validated_date):
+        validated_date['post'] = validated_date.get('post_id', None)
+        if validated_date['post'] is None:
+            raise serializers.ValidationError("post not found.")
+        del validated_date['post_id']
+
+        return Comment.objects.create(**validated_date)

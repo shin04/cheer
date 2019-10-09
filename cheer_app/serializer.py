@@ -13,7 +13,7 @@ class PostSerializer(serializers.ModelSerializer):
     author_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), write_only=True)
     class Meta:
         model = Post
-        fields = ('id', 'author', 'author_id', 'title', 'text', 'created_date', 'published_date')
+        fields = ('id', 'author', 'author_id', 'title', 'text', 'created_date', 'published_date', 'comments')
 
     def create(self, validated_date):
         validated_date['author'] = validated_date.get('author_id', None)

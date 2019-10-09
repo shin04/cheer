@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import UserViewSet, PostViewSet, CommentViewSet, MyPostViewSet
+from .views import UserViewSet, PostViewSet, CommentViewSet, MyPostViewSet, PostCommentViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -8,6 +8,7 @@ router.register(r'users', UserViewSet)
 router.register(r'posts', PostViewSet)
 router.register(r'comment', CommentViewSet)
 router.register(r'myposts', MyPostViewSet, base_name='MyPost')
+router.register(r'postcomment', PostCommentViewSet, basename='PostComment')
 
 urlpatterns = [
     path('', views.index, name='index'),

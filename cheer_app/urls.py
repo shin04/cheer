@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import UserViewSet, PostViewSet, CommentViewSet, MyPostViewSet, PostCommentViewSet
+from .views import (UserViewSet, PostViewSet, CommentViewSet,
+                    MyPostViewSet, PostCommentViewSet, UserCommentViewSet)
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -9,6 +10,7 @@ router.register(r'posts', PostViewSet)
 router.register(r'comment', CommentViewSet)
 router.register(r'myposts', MyPostViewSet, base_name='MyPost')
 router.register(r'postcomment', PostCommentViewSet, basename='PostComment')
+router.register(r'usercomment', UserCommentViewSet, base_name='UserComment')
 
 urlpatterns = [
     path('', views.index, name='index'),

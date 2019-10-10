@@ -143,6 +143,13 @@ class PostCommentViewSet(viewsets.ModelViewSet):
         serializer = CommentSerializer(comments)
         return comments
 
+class UserCommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Comment.objects.filter(post__author=user)
+
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer

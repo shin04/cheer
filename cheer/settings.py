@@ -28,7 +28,7 @@ except ImportError:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '72b6c690.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', '8e259d80.ngrok.io']
 
 # Application definition
 
@@ -145,7 +145,7 @@ LOGOUT_REDIRECT_URL = '/'
 # api-auth
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        #'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',

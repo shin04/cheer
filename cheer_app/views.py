@@ -5,7 +5,7 @@ from .models import Post, Comment
 from accounts.models import CustomUser as User
 from .forms import PostForm, CommentForm, SignUpForm
 from .serializer import PostSerializer, CommentSerializer, UserSerializer
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, action
 from rest_framework.authtoken.models import Token
@@ -110,10 +110,12 @@ def is_user(request):
     return Response({"id": request.user.id, "username": request.user.username, "email": request.user.email, "token": Token.objects.get_or_create(user=request.user)[0].key})
 
 class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 class PostViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
@@ -127,6 +129,7 @@ class PostViewSet(viewsets.ModelViewSet):
     #     return Response({'ststus': 'success'})
 
 class MyPostViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -144,6 +147,7 @@ class PostCommentViewSet(viewsets.ModelViewSet):
         return comments
 
 class UserCommentViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = CommentSerializer
 
     def get_queryset(self):

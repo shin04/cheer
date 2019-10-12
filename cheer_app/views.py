@@ -27,7 +27,9 @@ def index(request):
     return render(request, 'cheer_app/index.html')
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    non_achieve_post = Post.objects.filter(achievement=False)
+    #posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    posts = non_achieve_post.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'cheer_app/post_list.html', {'posts': posts})
 
 def post_detail(request, pk):
@@ -63,10 +65,12 @@ def post_edit(request, pk):
 
 @login_required
 def my_post_list(request):
-    posts = Post.objects.filter()
+    achievement_posts = Post.objects.filter(achievement=True).order_by('created_date')
+    non_achieve_posts = Post.objects.filter(achievement=False).order_by('created_date')
+    posts = non_achieve_posts.filter(published_date__lte=timezone.now()).order_by('created_date')
     drafts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
     #posts = Post.objects.all().order_by('created_date')
-    return render(request, 'cheer_app/my_post_list.html', {'posts': posts, 'drafts': drafts})
+    return render(request, 'cheer_app/my_post_list.html', {'posts': posts, 'drafts': drafts, 'achievement_posts': achievement_posts})
 
 @login_required
 def post_draft_list(request):
@@ -78,6 +82,12 @@ def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.publish()
     return redirect('post_detail', pk=pk)
+
+@login_required
+def post_achieve(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.achieve()
+    return redirect(post_detail, pk=pk)
 
 @login_required
 def post_remove(request, pk):

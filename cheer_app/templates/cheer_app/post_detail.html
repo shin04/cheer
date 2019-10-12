@@ -10,13 +10,18 @@
     {% if post.author.username == user.username %}
       <a href="{% url 'post_edit' pk=post.pk %}">編集</a>
       <a href="{% url 'post_remove' pk=post.pk %}">削除</a>
+      {% if post.achievement != True %}
+        <a href="{% url 'post_achieve' pk=post.pk %}">達成</a>
+      {% endif %}
     {% endif %}
     <h1>{{ post.title }}</h1>
       <p>{{ post.text|linebreaksbr }}</p>
     </div>
 
-    <hr>
-    <a href="{% url 'add_comment_to_post' pk=post.pk %}">応援する</a>
+    {% if post.achievement != True %}
+      <hr>
+      <a href="{% url 'add_comment_to_post' pk=post.pk %}">応援する</a>
+    {% endif %}
 
     <div class="cheer_count">
       <p>応援された数：{{ post.comments.count }}</p>

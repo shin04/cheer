@@ -13,7 +13,7 @@ class PostSerializer(serializers.ModelSerializer):
     author_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), write_only=True)
     class Meta:
         model = Post
-        fields = ('id', 'author', 'author_id', 'title', 'text', 'created_date', 'published_date', 'achievement', 'comments')
+        fields = ('id', 'author', 'author_id', 'title', 'text', 'created_date', 'published_date', 'achievement')
 
     def create(self, validated_date):
         validated_date['author'] = validated_date.get('author_id', None)
@@ -27,6 +27,7 @@ class PostSerializer(serializers.ModelSerializer):
         instance.title = validated_date.get('title', instance.title)
         instance.text = validated_date.get('text', instance.text)
         instance.published_date = validated_date.get('published_date', instance.published_date)
+        instance.achievement = validated_date.get('achievement', instance.achievement)
         instance.save()
 
         return instance

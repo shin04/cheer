@@ -11,7 +11,9 @@
       <a href="{% url 'post_edit' pk=post.pk %}">編集</a>
       <a href="{% url 'post_remove' pk=post.pk %}">削除</a>
       {% if post.achievement != True %}
-        <a href="{% url 'post_achieve' pk=post.pk %}">達成</a>
+        {% if post.published_date %}
+          <a href="{% url 'post_achieve' pk=post.pk %}">達成</a>
+        {% endif %}
       {% endif %}
     {% endif %}
     <h1>{{ post.title }}</h1>
